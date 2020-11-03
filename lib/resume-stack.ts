@@ -29,13 +29,17 @@ export class ResumeStack extends cdk.Stack {
 
     // aws dynamodb put-item --table-name CounterResumeTable --item "{\"itemId\":{\"S\":\"abc-123\"},\"Name\":{\"S\":\"Fluffy\"},\"Color\":{\"S\":\"white\"}}" --profile Timoaccount --region us-east-1
 
+    /*
     const api = new apigw.RestApi(this, 'CounterApi', {
       restApiName: 'Counter API for resume',
       description: 'An API GW for a dynamoDB to access the data',
       defaultCorsPreflightOptions: {
         allowOrigins: apigw.Cors.ALL_ORIGINS,
       },
+      
     });
+    */
+    
 
     const counterLambda = new lambda.Function(this, 'CounterResumeFunction', {
       functionName: 'CounterResumeFunction',
@@ -46,16 +50,29 @@ export class ResumeStack extends cdk.Stack {
       environment: {
         TABLE_NAME: dynamoTable.tableName,
         PRIMARY_KEY: 'itemId',
-        ApiID: api.restApiId,
+        
       },
     });
 
+    const api = new apigw.LambdaRestApi(this, 'Counterapi',{
+      handler: counterLambda,
+      restApiName: 'Counter API ',
+      proxy: false,
+      description: 'An API GW for a dynamoDB to access the data',
+      defaultCorsPreflightOptions: {
+        allowOrigins: apigw.Cors.ALL_ORIGINS,
+      },
+    })
+
+    // https://docs.aws.amazon.com/cdk/api/latest/docs/aws-apigateway-readme.html#working-with-models !!!
+    // Current woraroun -> Delete the set GET methde and replace it with a new one without proxy
+
     dynamoTable.grantReadWriteData(counterLambda);
 
+    //Disable mapping
     const items = api.root.addResource('items');
     const getAllIntegration = new apigw.LambdaIntegration(counterLambda);
     items.addMethod('GET', getAllIntegration);
-    //addCorsOptions(items);
 
     //Add Bucket with static website
    const resumeBucket= new s3.Bucket(this, "my-resume-website-bucket-1251874", {
@@ -88,31 +105,3 @@ export class ResumeStack extends cdk.Stack {
   }
 }
 
-// Cross origin sharing
-function addCorsOptions(apiResource: apigw.IResource) {
-  apiResource.addMethod('OPTIONS', new apigw.MockIntegration({
-    integrationResponses: [{
-      statusCode: '200',
-      responseParameters: {
-        'method.response.header.Access-Control-Allow-Headers': "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-        'method.response.header.Access-Control-Allow-Origin': "'*'",
-        'method.response.header.Access-Control-Allow-Credentials': "'false'",
-        'method.response.header.Access-Control-Allow-Methods': "'OPTIONS,GET,PUT,POST,DELETE'",
-      },
-    }],
-    passthroughBehavior: apigw.PassthroughBehavior.NEVER,
-    requestTemplates: {
-      'application/json': '{"statusCode": 200}',
-    },
-  }), {
-    methodResponses: [{
-      statusCode: '200',
-      responseParameters: {
-        'method.response.header.Access-Control-Allow-Headers': true,
-        'method.response.header.Access-Control-Allow-Methods': true,
-        'method.response.header.Access-Control-Allow-Credentials': true,
-        'method.response.header.Access-Control-Allow-Origin': true,
-      },
-    }],
-  });
-}

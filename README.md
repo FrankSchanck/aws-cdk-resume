@@ -6,6 +6,10 @@ Instead of the given instruction I extended the project and added it with:
  - CDK instead of SAM
  - Typescript lambda functions
 
+# set up
+You have to write the api adress to the html
+if you redeploy the bucket id changes -> also needs to be added to the html file
+
 # Credits
 The base html resume and css is from the project: 
 https://github.com/tnielsen2/cloud-resume-challenge/tree/master/website 
