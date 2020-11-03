@@ -1,3 +1,11 @@
+# Cloud resume challeng
+In order to get some practise to take the aws solution architect certification, I got inspired by the cloudresumechallenge:
+https://cloudresumechallenge.dev/instructions/ 
+
+Instead of the given instruction I extended the project and added it with:
+ - CDK instead of SAM
+ - Typescript lambda functions
+
 # Welcome to your CDK TypeScript project!
 
 This is a blank project for TypeScript development with CDK.
