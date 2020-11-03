@@ -6,6 +6,10 @@ Instead of the given instruction I extended the project and added it with:
  - CDK instead of SAM
  - Typescript lambda functions
 
+# Credits
+The base html resume and css is from the project: 
+https://github.com/tnielsen2/cloud-resume-challenge/tree/master/website 
+
 # Welcome to your CDK TypeScript project!
 
 This is a blank project for TypeScript development with CDK.
