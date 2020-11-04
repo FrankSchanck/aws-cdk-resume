@@ -9,7 +9,7 @@
   <meta charset="UTF-8">
 
   <link type="text/css" rel="stylesheet"
-    href="https://s3.us-east-1.amazonaws.com/resumestack-myresumewebsitebucket125187473914b21-1rzdnhbotcl28/base.css">
+    href="https://s3.us-east-1.amazonaws.com/resumestack-myresumewebsitebucket125187473914b21-ycsv2wezsggk/base.css">
   <link href='http://fonts.googleapis.com/css?family=Rokkitt:400,700|Lato:400,300' rel='stylesheet' type='text/css'>
 
   <!--[if lt IE 9]>
@@ -22,7 +22,7 @@
     <div class="mainDetails">
       <div id="headshot" class="quickFade">
         <img
-          src="https://s3.us-east-1.amazonaws.com/resumestack-myresumewebsitebucket125187473914b21-1rzdnhbotcl28/headshot.jpg"
+          src="https://s3.us-east-1.amazonaws.com/resumestack-myresumewebsitebucket125187473914b21-ycsv2wezsggk/headshot.jpg"
           alt="Frank Schanck" />
       </div>
 
@@ -33,11 +33,21 @@
 
       <div id="contactDetails" class="quickFade delayFour">
         <ul>
-          <li>e: <a href="frank.schanck@mhp.com" target="_blank">frank.schanck@mhp.com</a></li>
+          <li>e: <a href="mailto:frank.schanck@mhp.com" target="_blank">frank.schanck@mhp.com</a></li>
           <li>m: (+49) 15233149362</li>
         </ul>
       </div>
       <div class="clear"></div>
+
+      <section>
+        <div>
+          <span class="abouthisresume"><a href="https://github.com/FrankSchanck/aws-cdk-resume"
+            style="color:rgb(37, 39, 138); text-decoration: underline;">Link to the Github project for this AWS S3 hosted resume</a></span>
+            <span class="sectionCounter"><b id="count"></b></span>
+          </div>
+        <div class="clear"></div>
+      </section>
+
     </div>
 
     <div id="mainArea" class="quickFade delayFive">
@@ -49,7 +59,7 @@
           </div>
 
           <div class="sectionContent">
-            <p>IT Consultant, specializing in Cloud Solutions Architect, Industrial IoT and AWS deployments. </p>
+            <p>IT Consultant, specializing in Cloud Computing, Industrial IoT and Smart Manufacturing - Tech Enthusiast </p>
           </div>
         </article>
         <div class="clear"></div>
@@ -138,13 +148,11 @@
 
         <div class="sectionContent">
           <ul class="keySkills">
-            <li>Ansible</li>
+            <li>AWS - CDK Development</li>
             <li>CloudFormation</li>
-            <li>CDK</li>
-            <li>ECS</li>
             <li>Git</li>
-            <li>Jenkins</li>
             <li>Linux</li>
+            <li>Java</li>
             <li>Python</li>
             <li>Typescript</li>
           </ul>
@@ -177,28 +185,20 @@
         <div class="sectionContent">
           <ul class="keySkills">
             <li>AWS: Cloud Solutions Architect Associate</li>
-            <li>MTM</li>
+            <li>Methodes of Time Measuments</li>
 
           </ul>
         </div>
         <div class="clear"></div>
       </section>
 
-      <section>
-        <article>
-          <span class="abouthisresume"><a href="https://github.com/FrankSchanck/aws-cdk-resume"
-              style="color:black; text-decoration: none;">About this resume</a></span><span class="sectionCounter"><b
-              id="count"></b></span>
-        </article>
-        <div class="clear"></div>
-      </section>
-
+      
 </body>
 
 </html>
 
 <script>
-  const url = 'https://m7v2ezwaa6.execute-api.us-east-1.amazonaws.com/prod/items';
+  const url = 'https://yptl53kjij.execute-api.us-east-1.amazonaws.com/prod/items';
 
   function get_counter_value() {
     return fetch(url)

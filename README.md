@@ -1,14 +1,14 @@
-# Cloud resume challeng
+# Cloud resume challenge
 In order to get some practise to take the aws solution architect certification, I got inspired by the cloudresumechallenge:
 https://cloudresumechallenge.dev/instructions/ 
 
-Instead of the given instruction I extended the project and added it with:
+Instead of the given instruction I changed the project a bit with
  - CDK instead of SAM
- - Typescript lambda functions
+ - Typescript lambda functions instead of Python
 
-# set up
-You have to write the api adress to the html
-if you redeploy the bucket id changes -> also needs to be added to the html file
+# Set up
+To set up this stack you have to manually add the URLs to your html file. You can do this with a redploy. Everytime you destroy/deploy the your stack, the URLs are lost. 
+Possible Workaround: You can add a DNS via Route53 what would cost you 10€
 
 # Credits
 The base html resume and css is from the project: 

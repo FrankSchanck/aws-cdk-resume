@@ -5,6 +5,8 @@ import * as path from 'path';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
 import * as apigw from '@aws-cdk/aws-apigateway';
 import * as lambda from '@aws-cdk/aws-lambda';
+import * as cloudfront from '@aws-cdk/aws-cloudfront';
+import * as origins from '@aws-cdk/aws-cloudfront-origins';
 
 export class ResumeStack extends cdk.Stack {
 
@@ -12,10 +14,6 @@ export class ResumeStack extends cdk.Stack {
 
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-
-  // TODO : https://medium.com/@robbcobb/make-a-resume-website-from-scratch-991845147ec 
-  // https://github.com/tbaltrushaitis/cv 
-  // https://github.com/tnielsen2/cloud-resume-challenge/tree/master/website 
 
   // Add dynamoDb table with api gateway
     const dynamoTable= new dynamodb.Table(this, "CounterTable", {
@@ -29,18 +27,6 @@ export class ResumeStack extends cdk.Stack {
 
     // aws dynamodb put-item --table-name CounterResumeTable --item "{\"itemId\":{\"S\":\"abc-123\"},\"Name\":{\"S\":\"Fluffy\"},\"Color\":{\"S\":\"white\"}}" --profile Timoaccount --region us-east-1
 
-    /*
-    const api = new apigw.RestApi(this, 'CounterApi', {
-      restApiName: 'Counter API for resume',
-      description: 'An API GW for a dynamoDB to access the data',
-      defaultCorsPreflightOptions: {
-        allowOrigins: apigw.Cors.ALL_ORIGINS,
-      },
-      
-    });
-    */
-    
-
     const counterLambda = new lambda.Function(this, 'CounterResumeFunction', {
       functionName: 'CounterResumeFunction',
       runtime: lambda.Runtime.NODEJS_12_X,
@@ -50,7 +36,6 @@ export class ResumeStack extends cdk.Stack {
       environment: {
         TABLE_NAME: dynamoTable.tableName,
         PRIMARY_KEY: 'itemId',
-        
       },
     });
 
@@ -101,7 +86,11 @@ export class ResumeStack extends cdk.Stack {
    this.urlOutput= new cdk.CfnOutput(this, 'ResumeUrl', {
     value: resumeBucket.urlForObject('resume.html'),
   });
-  
+
+  // check https://aws.amazon.com/de/blogs/networking-and-content-delivery/amazon-s3-amazon-cloudfront-a-match-made-in-the-cloud/
+  new cloudfront.Distribution(this, 'myDist', {
+    defaultBehavior: { origin: new origins.S3Origin(resumeBucket) },
+  });
   }
 }
 
